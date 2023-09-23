@@ -1,2 +1,2 @@
 # ML-Final-Project
-A respository for the University of Utah course CS5350/6350
+This is a machine learning library developed by Dominic Malouf for CS5350/6350 in University of Utah.
