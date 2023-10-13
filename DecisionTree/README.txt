@@ -1,3 +1,11 @@
+How to create a decision tree:
+Call the ID3 function in ID3.py
+ID3(df, label, method, maxTreeDepth)
+df: a pandas data frame of the dataset that the decision tree will represent
+label: a string for the attribute in the dataset that is being predicted by the tree
+method: a string for 'Entropy', 'ME', or 'GI' (the heuristic that the tree will split by)
+maxTreeDepth: an integer for how many levels the tree will grow
+
 Hello Grader!
 
 I will list the question numbers for HW1 and where to find the code that answers that question
