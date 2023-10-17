@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import statistics
 
 # df is a data frame with a specific value for an attribute (e.g. only data with Outlook = Sunny)
 # label is attribute that is the predictor and labelValues is list of possible values (e.g. ["yes","no"])
