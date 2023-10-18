@@ -1,3 +1,3 @@
-# this is going to suck
+# this is going to be super awesome
 def adaBoost():
     return None
