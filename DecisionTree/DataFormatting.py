@@ -2,15 +2,15 @@ import pandas as pd
 import statistics
 
 #Cars datasets formatting
-carsTestDF = pd.read_csv ('DataSets/Car/test.csv', header=None, names=['buying', 'maint', 'doors', 'persons', 'lug-boot', 'safety', 'label'])
-carsTrainDF = pd.read_csv ('DataSets/Car/train.csv', header=None, names=['buying', 'maint', 'doors', 'persons', 'lug-boot', 'safety', 'label'])
+carsTestDF = pd.read_csv ('DecisionTree/DataSets/Car/test.csv', header=None, names=['buying', 'maint', 'doors', 'persons', 'lug-boot', 'safety', 'label'])
+carsTrainDF = pd.read_csv ('DecisionTree/DataSets/Car/train.csv', header=None, names=['buying', 'maint', 'doors', 'persons', 'lug-boot', 'safety', 'label'])
 
 
 #Bank datasets formatting
 bankColumns = ['age','job','marital','education','default','balance','housing',
                'loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
-bankTestDF = pd.read_csv ('DataSets/Bank/test.csv', header=None, names=bankColumns)
-bankTrainDF = pd.read_csv ('DataSets/Bank/train.csv', header=None, names=bankColumns)
+bankTestDF = pd.read_csv ('DecisionTree/DataSets/Bank/test.csv', header=None, names=bankColumns)
+bankTrainDF = pd.read_csv ('DecisionTree/DataSets/Bank/train.csv', header=None, names=bankColumns)
 bankTestDFCopy = bankTestDF.copy()
 bankTrainDFCopy = bankTrainDF.copy()
 

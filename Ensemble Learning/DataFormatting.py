@@ -1,12 +1,11 @@
 import pandas as pd
 import statistics
 
-
 #Bank datasets formatting
 bankColumns = ['age','job','marital','education','default','balance','housing',
                'loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
-bankTestDF = pd.read_csv ('DataSets/Bank/test.csv', header=None, names=bankColumns)
-bankTrainDF = pd.read_csv ('DataSets/Bank/train.csv', header=None, names=bankColumns)
+bankTestDF = pd.read_csv ('Ensemble Learning/DataSets/Bank/test.csv', header=None, names=bankColumns)
+bankTrainDF = pd.read_csv ('Ensemble Learning/DataSets/Bank/train.csv', header=None, names=bankColumns)
 bankTestDFCopy = bankTestDF.copy()
 bankTrainDFCopy = bankTrainDF.copy()
 
@@ -29,6 +28,10 @@ for column in numericColumns:
 
 bankTestDFCopy.loc[bankTestDFCopy['pdays'] > statistics.median(bankTestDF['pdays'].tolist()), 'pdays'] = 1
 bankTestDFCopy.loc[bankTestDFCopy['pdays'] <= statistics.median(bankTestDF['pdays'].tolist()), 'pdays'] = 0
+
+#for adaBoost algorithm, each example in the dataframe is given a weight value that begins with all being equal
+bankTrainDFCopy['weight'] = 1/bankTrainDFCopy.shape[0]
+bankTestDFCopy['weight'] = 1/bankTestDFCopy.shape[0]
 
 # dataframes to pass to prediction functions
 finalBankTrainDF = bankTrainDFCopy

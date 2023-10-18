@@ -2,6 +2,8 @@ import InfoGain
 import DataFormatting
 
 # creates a decision tree with depth of 2
+# the dataframe passed in must include weights for each example
+# these weights will then be manipulated by the adaBoost algorithm
 def makeDecisionStump(df, label):
     dfCopy = df.copy()
     tree = {}
@@ -10,11 +12,13 @@ def makeDecisionStump(df, label):
     attributeValueCounts = df[maxInfoAttribute].value_counts(sort=False) #dictionary of the count of attribute values that are unique
     tree = {} #either the node or a sub tree
 
+    
     for attributeValue, count in attributeValueCounts.items():
         attributeValueDF = df[df[maxInfoAttribute] == attributeValue] #dataset with rows of specific attribute
 
         pureNode = False #boolean for tracking if attributeValue is pure or not
         for v in labelValues:
+            #adds the total weights of the rows with the attribute
             labelCount = attributeValueDF[attributeValueDF[label] == v].shape[0] #count of label v
 
             if labelCount == count: #all labels for this attribute are the same (it is pure)
@@ -34,8 +38,3 @@ def makeDecisionStump(df, label):
 
             tree[attributeValue] = mostCommonVal
     return tree
-
-print("hello there")
-dataFrame = DataFormatting.finalBankTrainDF
-stump = makeDecisionStump(dataFrame, 'label')
-print(stump)
