@@ -29,10 +29,12 @@ for column in numericColumns:
 bankTestDFCopy.loc[bankTestDFCopy['pdays'] > statistics.median(bankTestDF['pdays'].tolist()), 'pdays'] = 1
 bankTestDFCopy.loc[bankTestDFCopy['pdays'] <= statistics.median(bankTestDF['pdays'].tolist()), 'pdays'] = 0
 
-#for adaBoost algorithm, each example in the dataframe is given a weight value that begins with all being equal
-bankTrainDFCopy['weight'] = 1/bankTrainDFCopy.shape[0]
-bankTestDFCopy['weight'] = 1/bankTestDFCopy.shape[0]
+#the label is labeled as a 1 or a -1 for adaBoost label label label
+bankTrainDFCopy.loc[bankTrainDFCopy['y'] == 'yes', 'y'] = 1
+bankTrainDFCopy.loc[bankTrainDFCopy['y'] == 'no', 'y'] = -1
+bankTestDFCopy.loc[bankTestDFCopy['y'] == 'yes', 'y'] = 1
+bankTestDFCopy.loc[bankTestDFCopy['y'] == 'no', 'y'] = -1
 
 # dataframes to pass to prediction functions
-finalBankTrainDF = bankTrainDFCopy
-finalBankTestDF = bankTestDFCopy
+finalBankTrainDF = bankTrainDFCopy.copy()
+finalBankTestDF = bankTestDFCopy.copy()

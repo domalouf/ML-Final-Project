@@ -1,4 +1,3 @@
-import ID3
 import pandas as pd
 
 # instance is a list of values for attributes that will be passed into the tree (e.g. [‘Outlook’][‘Rain’][‘Wind’][‘Strong’])
