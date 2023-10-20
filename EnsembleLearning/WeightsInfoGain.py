@@ -24,10 +24,10 @@ def informationGain(attribute, df, label, labelValues):
     attributeInfoGain = 0.0
 
     for av in attributeValues:
-        attributeValueData = df[df[attribute] == av]  # rows with that attribute
+        attributeValueData = df[df[attribute] == av]  # rows with that attribute value
         attributeValueWeight = attributeValueData["adaWeight"].sum()
         attributeValueEntropy = totalEntropy(attributeValueData, label, labelValues)
-        attributeValueProbability = attributeValueWeight / 1
+        attributeValueProbability = attributeValueWeight / df["adaWeight"].sum()
         attributeInfoGain += attributeValueProbability * attributeValueEntropy
 
     return totalEntropy(df, label, labelValues) - attributeInfoGain

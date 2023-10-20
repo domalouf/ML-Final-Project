@@ -24,13 +24,13 @@ def adaBoost(_df, label, T):
         # 2) compute its vote
         # the error is the sum of the weights when the classifier is incorrect
         error = evaluateError(classifiers[i], df, label)
+        print("the error is: {}".format(error))
         vote = 0.5 * math.log((1 - error) / error)
 
         votes.append(vote)
 
         # 3) update the values of the weights of training examples
 
-        z = 0
         for index, row in df.iterrows():  # loops through rows in dataset
             if (
                 predict(classifiers[i], row) == row[label]
@@ -43,10 +43,7 @@ def adaBoost(_df, label, T):
                 -vote * prediction
             )  # updates weight based on prediction scores
 
-            z += row["adaWeight"]
-
-        for index, row in df.iterrows():  # repeats loop and normalizes weights
-            df.at[index, "adaWeight"] /= z
+        df['adaWeight'] /= df['adaWeight'].sum() # normalizes weights to sum up to 1
 
     # return final hypothesis
     # hypothesis uses both votes and classifiers
@@ -60,31 +57,18 @@ def adaBoost(_df, label, T):
 # returns accuracy of a decision tree tested on a dataframe
 def evaluateError(tree, df, label):
     wrongWeight = 0
-    for index, row in df.iterrows():  # loops through rows in dataset
-        result = predict(tree, row)  # predict the row
+    for index, row in df.iterrows():  # loops through examples
+        result = predict(tree, row)  # predict the example
         # if the prediction is wrong
-        if result != df[label].iloc[index]:
+        if result != row[label]:
             wrongWeight += row["adaWeight"]
     return wrongWeight
 
 
 # instance is a list of values for attributes that will be passed into the tree (e.g. [‘Outlook’][‘Rain’][‘Wind’][‘Strong’])
 def predict(tree, instance):
-    if not isinstance(tree, dict):  # if it is leaf node
-        return tree  # return the value
-    else:
-        rootNode = next(
-            iter(tree)
-        )  # getting first key/attribute name of the dictionary
-        attributeValue = instance[rootNode]  # value of the attribute
-        if (
-            attributeValue in tree[rootNode]
-        ):  # checking the attribute value in current tree node
-            return predict(
-                tree[rootNode][attributeValue], instance
-            )  # go to next attribute
-        else:
-            return None
+    attribute = next(iter(tree))
+    return tree[attribute][instance[attribute]] # gets the value of the stump from the instance's value
 
 
 # takes a hypothesis made by adaboost and tests it on a dataframe
@@ -112,7 +96,7 @@ def testHypothesis(hypothesis, df, label):
 testDF = DataFormatting.finalBankTrainDF
 
 print("starting adaBoost call")
-tempHypothesis = adaBoost(testDF, "y", 200)
+tempHypothesis = adaBoost(testDF, "y", 1)
 print("done with adaBoost call")
 
 print("this is the test for adaBoost: {}".format(testHypothesis(tempHypothesis, testDF, "y")))

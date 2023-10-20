@@ -69,8 +69,8 @@ def predict(tree, instance):
 
 print("starting the bagging algorithm")
 testDF = DataFormatting.finalBankTrainDF
-hypothesis = baggedTrees(testDF, 'y', 100)
+hypothesis = baggedTrees(testDF, 'y', 5)
 print("this is the hypothesis")
 print(hypothesis)
-open('BaggedOutput.txt', 'w').write(str(hypothesis))
+#open('BaggedOutput.txt', 'w').write(str(hypothesis))
 print("done with bagging algorithm")

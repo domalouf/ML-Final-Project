@@ -3,7 +3,6 @@ import DataFormatting
 
 
 # creates a decision tree with depth of 2
-# these weights will then be manipulated by the adaBoost algorithm
 def makeDecisionStump(df, label):
     dfCopy = df.copy()
     tree = {}
