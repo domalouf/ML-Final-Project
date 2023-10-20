@@ -93,8 +93,6 @@ def testHypothesis(hypothesis, df, label):
     correctGuesses = 0
     prediction = 0
     temp = 0
-    positive = 0
-    negative = 0
 
     for index, row in df.iterrows():  # for each example
         for i in range(
@@ -114,7 +112,7 @@ def testHypothesis(hypothesis, df, label):
 testDF = DataFormatting.finalBankTrainDF
 
 print("starting adaBoost call")
-tempHypothesis = adaBoost(testDF, "y", 2)
+tempHypothesis = adaBoost(testDF, "y", 200)
 print("done with adaBoost call")
 
 print("this is the test for adaBoost: {}".format(testHypothesis(tempHypothesis, testDF, "y")))

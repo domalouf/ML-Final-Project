@@ -1,4 +1,4 @@
-import InfoGain
+import WeightsInfoGain
 import DataFormatting
 
 
@@ -9,7 +9,7 @@ def makeDecisionStump(df, label):
     tree = {}
     labelValues = dfCopy[label].unique()
 
-    maxInfoAttribute = InfoGain.bestAttribute(df, label, labelValues)
+    maxInfoAttribute = WeightsInfoGain.bestAttribute(df, label, labelValues)
     attributeValueCounts = df[maxInfoAttribute].value_counts(
         sort=False
     )  # dictionary of the count of attribute values that are unique
