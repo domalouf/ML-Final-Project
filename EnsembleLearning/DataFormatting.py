@@ -4,8 +4,8 @@ import statistics
 #Bank datasets formatting
 bankColumns = ['age','job','marital','education','default','balance','housing',
                'loan','contact','day','month','duration','campaign','pdays','previous','poutcome','y']
-bankTestDF = pd.read_csv ('Ensemble Learning/DataSets/Bank/test.csv', header=None, names=bankColumns)
-bankTrainDF = pd.read_csv ('Ensemble Learning/DataSets/Bank/train.csv', header=None, names=bankColumns)
+bankTestDF = pd.read_csv ('EnsembleLearning/DataSets/Bank/test.csv', header=None, names=bankColumns)
+bankTrainDF = pd.read_csv ('EnsembleLearning/DataSets/Bank/train.csv', header=None, names=bankColumns)
 bankTestDFCopy = bankTestDF.copy()
 bankTrainDFCopy = bankTrainDF.copy()
 

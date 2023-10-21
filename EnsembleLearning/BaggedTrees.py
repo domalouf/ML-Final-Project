@@ -2,6 +2,7 @@ import ID3
 import pandas
 import random
 import math
+import numpy
 import DataFormatting
 
 def baggedTrees(_df, label, T):
@@ -64,13 +65,33 @@ def predict(tree, instance):
         if attributeValue in tree[rootNode]: #checking the attribute value in current tree node
             return predict(tree[rootNode][attributeValue], instance) #go to next attribute
         else:
-            return None
+            return 1
+        
+# takes a hypothesis and tests it on a dataframe
+def testHypothesis(hypothesis, df, label):
+    # hypothesis is a list in the form [votes, classifiers]
+    correctGuesses = 0
+    prediction = 0
+    temp = 0
+
+    for index, row in df.iterrows():  # for each example
+        for i in range(
+            len(hypothesis[0])
+        ):  # sums all iterations of the adaboost hypothesis
+            guess = predict(hypothesis[1][i], row)
+            temp += hypothesis[0][i] * guess
+
+        prediction = numpy.sign(temp)
+
+        if prediction == row[label]:
+            correctGuesses += 1
+
+    return correctGuesses / df.shape[0]
 
 
 print("starting the bagging algorithm")
 testDF = DataFormatting.finalBankTrainDF
 hypothesis = baggedTrees(testDF, 'y', 5)
-print("this is the hypothesis")
-print(hypothesis)
 #open('BaggedOutput.txt', 'w').write(str(hypothesis))
 print("done with bagging algorithm")
+print("the hypothsis has accuracy: {}".format(testHypothesis(hypothesis, testDF, 'y')))

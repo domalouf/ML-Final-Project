@@ -17,14 +17,13 @@ def adaBoost(_df, label, T):
 
     # repeat for T times
     for i in range(T):
-        print("performing iteration #{}".format(i))
+        print("performing iteration {} out of {}".format(i+1, T))
         # 1) find classifier
         classifiers.append(DecisionStumps.makeDecisionStump(df, label))
 
         # 2) compute its vote
         # the error is the sum of the weights when the classifier is incorrect
         error = evaluateError(classifiers[i], df, label)
-        print("the error is: {}".format(error))
         vote = 0.5 * math.log((1 - error) / error)
 
         votes.append(vote)
@@ -48,8 +47,6 @@ def adaBoost(_df, label, T):
     # return final hypothesis
     # hypothesis uses both votes and classifiers
     hypothesis = [votes, classifiers]
-    print("here are the final votes: {}".format(votes))
-    print("here are the final classifiers: {}".format(classifiers))
 
     return hypothesis
 
@@ -71,7 +68,7 @@ def predict(tree, instance):
     return tree[attribute][instance[attribute]] # gets the value of the stump from the instance's value
 
 
-# takes a hypothesis made by adaboost and tests it on a dataframe
+# takes a hypothesis and tests it on a dataframe
 def testHypothesis(hypothesis, df, label):
     # hypothesis is a list in the form [votes, classifiers]
     correctGuesses = 0
@@ -96,7 +93,6 @@ def testHypothesis(hypothesis, df, label):
 testDF = DataFormatting.finalBankTrainDF
 
 print("starting adaBoost call")
-tempHypothesis = adaBoost(testDF, "y", 1)
+tempHypothesis = adaBoost(testDF, "y", 10)
 print("done with adaBoost call")
-
-print("this is the test for adaBoost: {}".format(testHypothesis(tempHypothesis, testDF, "y")))
+print("this is the accuracy for adaBoost on the dataset it was trained on: {}".format(testHypothesis(tempHypothesis, testDF, "y")))
