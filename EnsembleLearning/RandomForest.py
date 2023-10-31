@@ -77,5 +77,4 @@ testDF = DataFormatting.finalBankTrainDF
 hypothesis = randomForest(testDF, 'y', 5, 2)
 print("this is the hypothesis")
 print(hypothesis)
-#open('BaggedOutput.txt', 'w').write(str(hypothesis))
 print("done with forest algorithm")
