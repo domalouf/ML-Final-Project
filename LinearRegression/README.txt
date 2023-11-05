@@ -1,1 +1,0 @@
-This is the Linear Regression folder
