@@ -142,15 +142,49 @@ yData = dataFormatting.trainY
 xTest = dataFormatting.testX
 yTest = dataFormatting.testY
 
-print("trying out perceptron")
-normalWeights = perceptron(xData, yData, 0.5, 10)
+print("all calls use learning rate of 0.5 and T of 10\n")
+print("Running normal perceptron 100 times and getting average error...")
+averageError = 0
+for i in range(100):
+    normalWeights = perceptron(xData, yData, 0.5, 10)
+    error = evaluatePerceptron(xTest, yTest, normalWeights)
+    averageError = averageError + error
 
-print("trying out voted perceptron")
-votedWeights = votedPerceptron(xData, yData, 0.5, 10)
+averageError = round(averageError/100, 5)
+print("the average error is: {}\n".format(averageError))
 
-print("trying out average perceptron")
-averageWeights = averagePerceptron(xData, yData, 0.5, 10)
+print("Running voted perceptron 20 times and getting average error...")
+averageError = 0
+for i in range(20):
+    votedWeights = votedPerceptron(xData, yData, 0.5, 10)
+    error = evaluateVotedPerceptron(xTest, yTest, votedWeights)
+    averageError = averageError + error
 
-print("this is the error for normal: {}".format(evaluatePerceptron(xTest, yTest, normalWeights)))
-print("this is the error for voted: {}".format(evaluateVotedPerceptron(xTest, yTest, votedWeights)))
-print("this is the error for average: {}".format(evaluatePerceptron(xTest, yTest, averageWeights)))
+averageError = round(averageError/20, 5)
+print("the average error is: {}\n".format(averageError))
+
+print("Running average perceptron 100 times and getting average error...")
+averageError = 0
+for i in range(100):
+    averageWeights = averagePerceptron(xData, yData, 0.5, 10)
+    error = evaluatePerceptron(xTest, yTest, averageWeights)
+    averageError = averageError + error
+
+averageError = round(averageError/100, 5)
+print("the average error is: {}\n".format(averageError))
+
+print("the weight vector from one call to perceptron is: {}\n".format(perceptron(xData, yData, 0.5, 10)))
+print("the weight vector from one call to averagePerceptron is: {}\n".format(averagePerceptron(xData, yData, 0.5, 10)))
+print("the weight vector and counts from one call to votedPerceptron is:\n")
+
+votedValues = votedPerceptron(xData, yData, 0.5, 10)
+
+# rounds values to 8 digits for better looking output
+votedValues = [([round(value, 8) for value in tup[0]], tup[1]) for tup in votedValues]
+print(votedValues)
+
+f = open("Perceptron/votedOutput.txt", "w")
+f.write(str(votedValues))
+f.close()
+
+print("the voted perception output is also contained in the file votedOutput.txt")
