@@ -98,14 +98,59 @@ def combine_matrix_rows_with_list(matrix, x):
             combined_list.append((row, None))  # If there are not enough elements in x, use None for the missing value.
     return combined_list
 
+# used for both perceptron and average perceptron
+# x and y are for test data, w is weight vector from perceptron
+def evaluatePerceptron(x, y, w):
+    wrongCount = 0
+
+    #for each example xy
+    for index, xRow in enumerate(x):
+
+        #if wrong prediction - add 1 to wrong count
+        if np.sign(np.dot(xRow,w)) * y[index] <= 0:
+            wrongCount = wrongCount + 1
+
+    # returns error of weight vector
+    return wrongCount/len(y)
+
+# x and y are for test data, vp is voted perceptron values for weight vectors and counts
+# vp is in form: [([weight vector], count), (([weight vector], count))]
+def evaluateVotedPerceptron(x, y, vp):
+    wrongCount = 0
+
+    #for each example xy
+    for index, xRow in enumerate(x):
+        prediction = 0
+
+        # for each weight vector and count
+        for weight in vp:
+
+            # adds up prediction signs
+            prediction = prediction + weight[1] * np.sign(np.dot(xRow,weight[0]))
+
+        #if wrong prediction - add 1 to wrong count
+        if prediction * y[index] <= 0:
+            wrongCount = wrongCount + 1
+
+    # returns error of weight vector
+    return wrongCount/len(y)
+
+
 xData = dataFormatting.trainX
 yData = dataFormatting.trainY
 
+xTest = dataFormatting.testX
+yTest = dataFormatting.testY
+
 print("trying out perceptron")
-print(perceptron(xData, yData, 0.5, 10))
+normalWeights = perceptron(xData, yData, 0.5, 10)
 
 print("trying out voted perceptron")
-#print(votedPerceptron(xData, yData, 0.5, 10)) # prints a lot of things
+votedWeights = votedPerceptron(xData, yData, 0.5, 10)
 
 print("trying out average perceptron")
-print(averagePerceptron(xData, yData, 0.5, 10))
+averageWeights = averagePerceptron(xData, yData, 0.5, 10)
+
+print("this is the error for normal: {}".format(evaluatePerceptron(xTest, yTest, normalWeights)))
+print("this is the error for voted: {}".format(evaluateVotedPerceptron(xTest, yTest, votedWeights)))
+print("this is the error for average: {}".format(evaluatePerceptron(xTest, yTest, averageWeights)))
