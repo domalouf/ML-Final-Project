@@ -142,11 +142,14 @@ yData = dataFormatting.trainY
 xTest = dataFormatting.testX
 yTest = dataFormatting.testY
 
+learningRate = 0.5
+numEpochs = 10
+
 print("all calls use learning rate of 0.5 and T of 10\n")
 print("Running normal perceptron 100 times and getting average error...")
 averageError = 0
 for i in range(100):
-    normalWeights = perceptron(xData, yData, 0.5, 10)
+    normalWeights = perceptron(xData, yData, learningRate, numEpochs)
     error = evaluatePerceptron(xTest, yTest, normalWeights)
     averageError = averageError + error
 
@@ -156,7 +159,7 @@ print("the average error is: {}\n".format(averageError))
 print("Running voted perceptron 20 times and getting average error...")
 averageError = 0
 for i in range(20):
-    votedWeights = votedPerceptron(xData, yData, 0.5, 10)
+    votedWeights = votedPerceptron(xData, yData, learningRate, numEpochs)
     error = evaluateVotedPerceptron(xTest, yTest, votedWeights)
     averageError = averageError + error
 
@@ -166,18 +169,18 @@ print("the average error is: {}\n".format(averageError))
 print("Running average perceptron 100 times and getting average error...")
 averageError = 0
 for i in range(100):
-    averageWeights = averagePerceptron(xData, yData, 0.5, 10)
+    averageWeights = averagePerceptron(xData, yData, learningRate, numEpochs)
     error = evaluatePerceptron(xTest, yTest, averageWeights)
     averageError = averageError + error
 
 averageError = round(averageError/100, 5)
 print("the average error is: {}\n".format(averageError))
 
-print("the weight vector from one call to perceptron is: {}\n".format(perceptron(xData, yData, 0.5, 10)))
-print("the weight vector from one call to averagePerceptron is: {}\n".format(averagePerceptron(xData, yData, 0.5, 10)))
+print("the weight vector from one call to perceptron is: {}\n".format(perceptron(xData, yData, learningRate, numEpochs)))
+print("the weight vector from one call to averagePerceptron is: {}\n".format(averagePerceptron(xData, yData, learningRate, numEpochs)))
 print("the weight vector and counts from one call to votedPerceptron is:\n")
 
-votedValues = votedPerceptron(xData, yData, 0.5, 10)
+votedValues = votedPerceptron(xData, yData, learningRate, numEpochs)
 
 # rounds values to 8 digits for better looking output
 votedValues = [([round(value, 8) for value in tup[0]], tup[1]) for tup in votedValues]
