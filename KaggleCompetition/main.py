@@ -1,9 +1,11 @@
 import sys
 #sys.path.append("..\\ML-Final-Project")
 sys.path.append("..\\ML-Final-Project\\DecisionTree")
+sys.path.append("..\\ML-Final-Project\\Perceptron")
 import InfoGain
 import ID3
 import Predictions
+import perceptron
 
 import DataFormatting
 
@@ -23,9 +25,9 @@ testingDFMean.drop(columns=['ID'])
 # treeMean = ID3.id3(trainingDFMean, 'income>50K', 'Entropy', len(trainingDFMean.columns)+1)
 # print("tree2 is done")
 
-print("making tree3")
-treeMedianME = ID3.id3(trainingDFMean, 'income>50K', 'ME', len(trainingDFMean.columns)+1)
-print("tree2 is done")
+# print("making tree3")
+# treeMedianME = ID3.id3(trainingDFMean, 'income>50K', 'ME', len(trainingDFMean.columns)+1)
+# print("tree2 is done")
 
 print("making tree4")
 treeMedianGI = ID3.id3(trainingDFMean, 'income>50K', 'GI', len(trainingDFMean.columns)+1)
@@ -52,11 +54,11 @@ def kagglePredict(tree, df, f):
 # kagglePredict(treeMean, testingDFMean, f)
 # f.close()
 
-print("writing to file3 ...")
-f = open("KaggleCompetition/Submissions/submission3.csv", "w")
-f.write("ID,Prediction\n")
-kagglePredict(treeMedianME, testingDFMedian, f)
-f.close()
+# print("writing to file3 ...")
+# f = open("KaggleCompetition/Submissions/submission3.csv", "w")
+# f.write("ID,Prediction\n")
+# kagglePredict(treeMedianME, testingDFMedian, f)
+# f.close()
 
 print("writing to file4 ...")
 f = open("KaggleCompetition/Submissions/submission4.csv", "w")
